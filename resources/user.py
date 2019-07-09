@@ -1,4 +1,5 @@
 import sqlite3
+import bcrypt
 from flask_restful import Resource, reqparse
 from models.user import UserModel
 
@@ -21,8 +22,10 @@ class UserRegister(Resource):
 
         if UserModel.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
+        else:
+            data['password'] = bcrypt.hashpw(data['password'].encode("utf-8"), bcrypt.gensalt())
 
         user = UserModel(**data)
         user.save_to_db()
 
-        return {"message": "User created successfully."}, 201
+        return {"message": f"User '{user.username}' created."}, 201
