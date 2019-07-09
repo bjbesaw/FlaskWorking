@@ -7,7 +7,7 @@ def authenticate(username, password):
     hpwin = password.encode("utf-8")
     print(hpwin)
     print(user.password)
-    if bcrypt.checkpw(hpwin, user.password):
+    if bcrypt.checkpw(hpwin, user.password.encode("utf-8")):
         return user
 
     # if user and safe_str_cmp(user.password, password):
