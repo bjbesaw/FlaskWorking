@@ -4,10 +4,7 @@ from models.user import UserModel
 
 def authenticate(username, password):
     user = UserModel.find_by_username(username)
-    hpwin = password.encode("utf-8")
-    print(hpwin)
-    print(user.password)
-    if bcrypt.checkpw(hpwin, user.password.encode("utf-8")):
+    if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8').decode()):
         return user
 
     # if user and safe_str_cmp(user.password, password):
