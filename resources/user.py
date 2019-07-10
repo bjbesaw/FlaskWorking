@@ -23,7 +23,8 @@ class UserRegister(Resource):
         if UserModel.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
         else:
-            data['password'] = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+            hashed_pw = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+            data['password'] = hashed_pw.decode('utf-8')
 
         user = UserModel(**data)
         user.save_to_db()
