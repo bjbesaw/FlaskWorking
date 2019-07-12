@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 from flask import Flask
 from flask_restful import Api
@@ -11,11 +12,13 @@ from resources.store import Store, StoreList
 
 app = Flask(__name__)
 
+load_dotenv()
+
 app.config['DEBUG'] = True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'My Secret Key'
+app.secret_key = os.getenv('SECRET_KEY')
 api = Api(app)
 
 jwt = JWT(app, authenticate, identity)  # /auth
