@@ -6,4 +6,4 @@ uwsgi
 psycopg2
 bcrypt
 gitsome
-dotenv
+python-dotenv
